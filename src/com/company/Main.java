@@ -3,8 +3,8 @@ package com.company;
 public class Main {
 
     public static void main(String[] args) {
-        new MethodOne();
-        //new MethodTwo();
+        //new MethodOne();
+        new MethodTwo();
 
     }
 }

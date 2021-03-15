@@ -27,7 +27,7 @@ public class MethodTwo {
         // providing a delegate to the method.
         client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
                 .thenApply(HttpResponse::body)
-                .thenAccept(System.out::println)
+                .thenApply(MethodTwo::parse)
                 .join();
 
         // thenApply(): Takes function and apply it on to the result of the previous stage. Remember that thenApply() is a
