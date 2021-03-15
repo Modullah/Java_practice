@@ -62,6 +62,12 @@ public class MethodOne {
                 reader.close();
             }
             //System.out.println(responseContent.toString());
+
+            /* static method rules:
+               1. can only call other static methods
+               2. can only access static variables
+               3. cannot use this or super keyword
+             */
             MethodTwo.parse(responseContent.toString());
         } catch (MalformedURLException e) {
             e.printStackTrace();
