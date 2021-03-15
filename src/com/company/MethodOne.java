@@ -1,5 +1,8 @@
 package com.company;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -7,6 +10,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+// not asynchronous, will block your main thread.
 public class MethodOne {
 
     private static HttpURLConnection connection;
@@ -57,7 +61,8 @@ public class MethodOne {
                 }
                 reader.close();
             }
-            System.out.println(responseContent.toString());
+            //System.out.println(responseContent.toString());
+            parse(responseContent.toString());
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -65,5 +70,18 @@ public class MethodOne {
         }finally {
             connection.disconnect();
         }
+    }
+
+    public static String parse(String responseBody) {
+
+        JSONArray albums = new JSONArray(responseBody);
+        for (int i = 0; i < albums.length(); i++){
+            JSONObject album = albums.getJSONObject(i);
+            int id = album.getInt("id");
+            int userId = album.getInt("userId");
+            String title = album.getString("title");
+            System.out.println(id + " " + title + " " + userId);
+        }
+        return null;
     }
 }
