@@ -62,7 +62,7 @@ public class MethodOne {
                 reader.close();
             }
             //System.out.println(responseContent.toString());
-            parse(responseContent.toString());
+            MethodTwo.parse(responseContent.toString());
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -70,18 +70,5 @@ public class MethodOne {
         }finally {
             connection.disconnect();
         }
-    }
-
-    public static String parse(String responseBody) {
-
-        JSONArray albums = new JSONArray(responseBody);
-        for (int i = 0; i < albums.length(); i++){
-            JSONObject album = albums.getJSONObject(i);
-            int id = album.getInt("id");
-            int userId = album.getInt("userId");
-            String title = album.getString("title");
-            System.out.println(id + " " + title + " " + userId);
-        }
-        return null;
     }
 }
