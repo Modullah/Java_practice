@@ -1,13 +1,11 @@
 package com.company;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
+
 import java.net.URL;
 
 // not asynchronous, will block your main thread.
@@ -24,9 +22,9 @@ public class MethodOne {
         // StringBuffer is like String but has more functionality.
         // StringBuffer represents growable and writable character sequences. ay have characters and substrings inserted
         // in the middle or appended to the end. It will automatically grow to make room for such additions and often
-        // has more characters preallocated than are actually needed, to allow room for growth.
+        // has more characters preallocate than are actually needed, to allow room for growth.
         // Simply put, this class has a lot methods for string manipulation. Length, capacity, insert, reverse, etc.
-        StringBuffer responseContent = new StringBuffer();
+        StringBuilder responseContent = new StringBuilder();
 
         try{
             URL url = new URL("https://jsonplaceholder.typicode.com/albums");
@@ -49,18 +47,14 @@ public class MethodOne {
                 // Reads a line of text. A line is considered to be terminated by any one of a line feed ('\n'),
                 // a carriage return ('\r'), a carriage return followed immediately by a line feed, or by reaching
                 // the end-of-file (EOF).
-                while((line = reader.readLine()) != null){
-                    responseContent.append(line);
-                }
-                reader.close();
             } else  {
                 reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 
-                while((line = reader.readLine()) != null){
-                    responseContent.append(line);
-                }
-                reader.close();
             }
+            while((line = reader.readLine()) != null){
+                responseContent.append(line);
+            }
+            reader.close();
             //System.out.println(responseContent.toString());
 
             /* static method rules:
@@ -69,11 +63,11 @@ public class MethodOne {
                3. cannot use this or super keyword
              */
             MethodTwo.parse(responseContent.toString());
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
+            //java.net.MalformedURLException is subclass/extends of IoException so we can remove the extra
+            // catch statement.
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             connection.disconnect();
         }
     }
