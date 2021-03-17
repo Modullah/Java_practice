@@ -15,16 +15,21 @@ public class MethodTwo {
 
         HttpClient  client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder().uri(URI.create("https://jsonplaceholder.typicode.com/albums")).build();
-        // completetableFuture implements future class, library for multithreading in java.
-        // using lambda expressions to use the available functions in the CompleteableFuture class
+        // completableFuture implements future class, library for multithreading in java.
+        // using lambda expressions to use the available functions in the CompletableFuture class
         // thenApply(): Takes function and apply it on to the result of the previous stage. Remember that thenApply()
         // is a synchronous mapping function. It returns a CompletionStage holding the result of the function.
 
 
-        //The double colon (::) operator, also known as method reference operator in Java, is used to call a method by
+        // The double colon (::) operator, also known as method reference operator in Java, is used to call a method by
         // referring to it with the help of its class directly. They behave exactly as the lambda expressions. The only
         // difference it has from lambda expressions is that this uses direct reference to the method by name instead of
         // providing a delegate to the method.
+
+        // sendAsync(HttpRequest, BodyHandler) sends the request and receives the response asynchronously. The sendAsync
+        // method returns immediately with a CompletableFuture<HttpResponse>. The CompletableFuture completes when the
+        // response becomes available. The returned CompletableFuture can be combined in different ways to declare
+        // dependencies among several asynchronous tasks.
         client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
                 .thenApply(HttpResponse::body)
                 .thenApply(MethodTwo::parse)
